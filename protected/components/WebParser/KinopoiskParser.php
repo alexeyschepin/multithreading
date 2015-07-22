@@ -26,8 +26,8 @@ class KinopoiskParser extends WebParser {
     }
 
     protected function extractTitle() {     
-        $element = $this->html->find('h1.moviename-big');
-        $element->dump_node();
+        $elements = $this->html->find('h1.moviename-big');
+        $this->movie->title = $elements[0]->innertext();
     }
 
 }
