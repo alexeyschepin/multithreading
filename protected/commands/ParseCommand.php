@@ -18,41 +18,6 @@ class ParseCommand extends CConsoleCommand {
     
     protected $stopServer = false;
 
-    public function run2($args) {
-//        $parser = new KinopoiskParser('http://www.kinopoisk.ru/film/694051/');
-//        $imdbParser = new ImdbParser('http://www.imdb.com/title/tt2293640/?ref_=hm_cht_t1');
-//        $imdbParser->run();
-
-        while (true) {
-            $url = Yii::app()->cache->get('task');
-            echo 'url: ' . $url . PHP_EOL;
-            if ($url) {
-                Yii::app()->cache->delete('task');
-                $pid = pcntl_fork();
-                if ($pid == -1) {
-                    // error
-                } elseif ($pid) {
-                    // parent
-                } else {
-                    echo 'pid: ' . $pid . PHP_EOL;
-                    if (strpos($url, 'kinopoisk.ru') !== false) {
-                        $parser = new KinopoiskParser($url);
-                    } elseif (strpos($url, 'imdb.com') !== false) {
-                        $parser = new ImdbParser($url);
-                    } else {
-                        
-                    }
-                    $parser->run();
-                    echo 'parsing done' . PHP_EOL;
-                    exit;
-                }
-            }
-            echo 'here';
-            sleep(1 * 1000);
-        }
-        echo 'done';
-    }
-
     public function run($args) {
         $childProcesses = array();
 
